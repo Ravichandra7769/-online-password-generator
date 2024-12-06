@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strong Password Generator</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #5C6BC0; /* Cool Blue */
+    }
+
+    /* Container for the form */
+    .password-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* Input box for password */
+    #password {
+      width: 100%;
+      padding: 10px;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      background-color: #f7f7f7;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+
+    #password:focus {
+      border-color: #5C6BC0; /* Cool Blue */
+      outline: none;
+      background-color: #e3e9f1;
+    }
+
+    /* Button styling */
+    button {
+      padding: 12px 20px;
+      font-size: 1.2rem;
+      background: #8e44ad; /* Purple */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #6c3c8e; /* Darker Purple */
+    }
+
+    button:active {
+      background: #5d3378; /* Darker Purple */
+    }
+
+    /* Cool Vibrant Background Colors for the page */
+    .background {
+      background: linear-gradient(45deg, #ff9e00, #5C6BC0, #8e44ad);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Password Generator</h1>
+  
+  <!-- Password container -->
+  <div class="password-container">
+    <div class="background">
+      <input type="text" id="password" placeholder="Your Strong Password" readonly>
+    </div>
+    
+    <button onclick="generatePassword()">Generate Password</button>
+  </div>
+
+  <script>
+    // Password generation function
+    function generatePassword(length = 12) {
+      if (length < 8) length = 8; // Ensure minimum length of 8 characters
+
+      const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+      const digits = '0123456789';
+      const punctuation = '!@#$%^&*()_+[]{}|;:,.<>?/~';
+
+      // Ensure at least one character from each category
+      let password = [
+        uppercase[Math.floor(Math.random() * uppercase.length)],
+        lowercase[Math.floor(Math.random() * lowercase.length)],
+        digits[Math.floor(Math.random() * digits.length)],
+        punctuation[Math.floor(Math.random() * punctuation.length)],
+      ];
+
+      // Fill the rest of the password with random characters from all categories
+      const allCharacters = uppercase + lowercase + digits + punctuation;
+      for (let i = 4; i < length; i++) {
+        password.push(allCharacters[Math.floor(Math.random() * allCharacters.length)]);
+      }
+
+      // Shuffle the password array to ensure randomness
+      password = password.sort(() => Math.random() - 0.5);
+
+      // Join the password array into a string and set it to the input field
+      document.getElementById('password').value = password.join('');
+    }
+  </script>
+</body>
+</html>
